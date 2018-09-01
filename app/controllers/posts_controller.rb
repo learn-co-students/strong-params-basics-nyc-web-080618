@@ -12,16 +12,26 @@ class PostsController < ApplicationController
 	end
 
 	def create
-	  @post = Post.new(params["post"])
-	  @post.save
+	  # @post = Post.new(params.require(:post).permit(:title, :description))
+		@post = Post.new(post_params(:title, :description))
+		@post.save
 	  redirect_to post_path(@post)
 	end
 
 	def update
 	  @post = Post.find(params[:id])
-	  @post.update(params["post"])
-	  redirect_to post_path(@post)
+	  # @post.update(params.require(:post).permit(:title)) only allow to update title
+		@post.update(post_params(:title))
+		redirect_to post_path(@post)
 	end
+
+	def post_params(*args)
+		params.require(:post).permit(*args)
+	end
+# pass the permitted fields in as *args;
+# this keeps `post_params` pretty dry while
+# still allowing slightly different behavior
+# depending on the controller action
 
 	def edit
 	  @post = Post.find(params[:id])
