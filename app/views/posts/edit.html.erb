@@ -1,6 +1,9 @@
-<%= form_for(@post) do |f| %>
+<<%= form_for(@post) do |f| %>
   <label>Post title:</label><br>
   <%= f.text_field :title %><br>
 
   <%= f.submit %>
+  <%= link_to "Edit", edit_book_path(book), class: "btn btn-primary" %>
+
+
 <% end %>
